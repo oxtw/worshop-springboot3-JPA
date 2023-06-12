@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +20,7 @@ import jakarta.persistence.Table;
 @Table(name = "tb_user") // nome da tabela no banco h2.
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id // Annotation para identificar o ID como PK no banco de dados.
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Informamos ao provedor de persistência que os valores a serem
 														// atribuídos ao identificador único serão gerados pela coluna
@@ -31,6 +33,7 @@ public class User implements Serializable {
 	private String password;
 
 	// classe associada a pedidos. Cada usuário pode ter varios pedidos
+	@JsonIgnore //annotation para corrigir bug de loop entre usuario e order.
 	@OneToMany(mappedBy ="client" )//"Um para muitos", mapeado pelo atributo client, assim como no nosso modelo de dominio.
 	private List<Order> orders = new ArrayList<>();
 
