@@ -1,32 +1,44 @@
 package com.migueljava.course.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+//Classe de usuários, informações pessoais e associação a classe pedidos.
 
-@Entity
-@Table(name ="tb_user")
-public class User implements Serializable{
+@Entity // toda classe de entidades deve ter essa annotation.
+@Table(name = "tb_user") // nome da tabela no banco h2.
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id // Annotation para identificar o ID como PK no banco de dados.
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Informamos ao provedor de persistência que os valores a serem
+														// atribuídos ao identificador único serão gerados pela coluna
+														// de auto incremento do banco de dados. Assim, um valor para o
+														// identificador é gerado para cada registro inserido no banco.
 	private Long id;
 	private String name;
 	private String email;
 	private String phone;
 	private String password;
-	
+
+	// classe associada a pedidos. Cada usuário pode ter varios pedidos
+	@OneToMany(mappedBy ="client" )//"Um para muitos", mapeado pelo atributo client, assim como no nosso modelo de dominio.
+	private List<Order> orders = new ArrayList<>();
+
+	// construtores
 	public User() {
 	}
 
-	public User(Long id, String name, String email,String phone, String password) {
+	public User(Long id, String name, String email, String phone, String password) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -34,7 +46,7 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-
+//Getters e Setters
 	public Long getId() {
 		return id;
 	}
@@ -58,6 +70,7 @@ public class User implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPhone() {
 		return phone;
 	}
@@ -65,6 +78,7 @@ public class User implements Serializable{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -73,6 +87,7 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
+//Hash code e equals
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -89,6 +104,9 @@ public class User implements Serializable{
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
 }
