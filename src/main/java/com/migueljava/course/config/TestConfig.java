@@ -8,9 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.migueljava.course.entities.Category;
 import com.migueljava.course.entities.Order;
 import com.migueljava.course.entities.User;
 import com.migueljava.course.entities.enums.OrderStatus;
+import com.migueljava.course.repositories.CategoryRepository;
 import com.migueljava.course.repositories.OrderRepository;
 import com.migueljava.course.repositories.UserRepository;
 
@@ -19,16 +21,25 @@ import com.migueljava.course.repositories.UserRepository;
 					// precisa estar igual. É nessa annotation onde escolhemos o perfil que vamos usar.
 public class TestConfig implements CommandLineRunner{
 	
-	//Injeção de dependencia
+	//Injeções de dependencia
 	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+		
+		Category cat1 = new Category(null, "Electronics"); 
+		Category cat2 = new Category(null, "Books"); 
+		Category cat3 = new Category(null, "Computers"); 
+		
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2,cat3));
 		
 		//instânciando usuário
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456"); 
