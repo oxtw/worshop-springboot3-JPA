@@ -1,8 +1,6 @@
 //Classe ENUMERADA de STATUS do pedido.
 package com.migueljava.course.entities.enums;
 
-import com.migueljava.course.entities.Order;
-
 public enum OrderStatus {
 	
 	//códigos numerados por ordem para não confundir no banco de dados e ser mais simples de fazer manutenção.
