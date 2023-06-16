@@ -25,8 +25,8 @@ public class Category implements Serializable {
 	private Long id;
 	private String name;
 	
-	@JsonIgnore
-	@ManyToMany(mappedBy = "categories")
+	@JsonIgnore //correção do bug de loop por conta da associação de tabelas;
+	@ManyToMany(mappedBy = "categories")//mapeando e associando produtos e categorias com "muitos para muitos"
 	private Set<Product> products = new HashSet<>();
 	
 	public Category() {
