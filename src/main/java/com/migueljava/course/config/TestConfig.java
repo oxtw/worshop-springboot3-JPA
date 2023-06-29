@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.migueljava.course.entities.Category;
 import com.migueljava.course.entities.Order;
 import com.migueljava.course.entities.OrderItem;
+import com.migueljava.course.entities.Payment;
 import com.migueljava.course.entities.Product;
 import com.migueljava.course.entities.User;
 import com.migueljava.course.entities.enums.OrderStatus;
@@ -86,5 +87,10 @@ public class TestConfig implements CommandLineRunner{
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
+		Payment pay1 = new Payment(null,Instant.parse("2019-06-20T21:53:07Z"), o1 );//criando um teste de pagamento para o pedido o1.
+		o1.setPayment(pay1);//associando pedido o1 ao pagamento pay1;
+		
+		orderRepository.save(o1);// Desta forma o JPA vai tratar de salvar o nosso pagamento.
 	}
 }
